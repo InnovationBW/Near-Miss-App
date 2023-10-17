@@ -75,9 +75,14 @@
       <br>
       <h1>Near-miss Receipt</h1>
       <?php
-         require_once('connectionInfo.php');
-         $dbConn = @mysqli_connect($mysql_host,$mysql_user,$mysql_pass,$mysql_db);
-         
+         require('connectionInfo.php');
+         // $dbConn = @mysqli_connect($mysql_host,$mysql_user,$mysql_pass,$mysql_db);
+
+         // Set SSL cert and open connection to the MySQL server
+         $dbConn = mysqli_init();
+         $dbConn->ssl_set(NULL, NULL, $mysql_ssl, NULL, NULL);
+         $dbConn->real_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
+                  
          if(!$dbConn)
          {
              echo "<p>Connection with the database has failed</p>";
